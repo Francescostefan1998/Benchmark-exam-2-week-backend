@@ -7,7 +7,7 @@ servers:
   - url: http://localhost:3001
     variables: {}
     description: Local server
-  - url: https://epicbooks.herokuapp.com
+  - url: https://benchmark-exam-2-week-backend-production.up.railway.app
     variables: {}
     description: Cloud server
 tags:
