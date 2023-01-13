@@ -1,0 +1,24 @@
+[
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "year": "2001",
+    "type": "movie",
+    "poster": "https://res.cloudinary.com/dkyzwols6/image/upload/v1673609571/fs0422/netflix/ar9garwp9od05hngdenv.jpg",
+    "category": "Horror",
+    "createdAt": "2023-01-13T10:34:56.576Z",
+    "imdbID": "ppood5bwlcuduwua",
+    "reviews": [],
+    "updatedAt": "2023-01-13T11:32:51.812Z"
+  },
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "year": "2001",
+    "type": "movie",
+    "poster": "https://res.cloudinary.com/dkyzwols6/image/upload/v1673609640/fs0422/netflix/bot7ol7wvm7u0f6cxdny.jpg",
+    "category": "Horror",
+    "createdAt": "2023-01-13T10:34:58.628Z",
+    "imdbID": "ppood5bwlcuduyf9",
+    "reviews": [],
+    "updatedAt": "2023-01-13T11:34:00.953Z"
+  }
+]

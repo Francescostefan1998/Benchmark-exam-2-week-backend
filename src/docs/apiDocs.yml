@@ -1,0 +1,329 @@
+openapi: 3.0.1
+info:
+  title: Epic Medias API
+  description: We have medias 
+  version: 1.0.1
+servers:
+  - url: http://localhost:3001
+    variables: {}
+    description: Local server
+  - url: https://epicbooks.herokuapp.com
+    variables: {}
+    description: Cloud server
+tags:
+  - name: medias
+    description: Operations about medias
+  - name: images and pdf
+    description: Operations about uploading images, sending email, getting pdf
+paths:
+  /medias:
+    get:
+      tags:
+        - medias
+      summary: Returns a list of movie.
+      description: Optional extended description in CommonMark or HTML.
+      parameters:
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: Filter mediass list by category
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: Filter mediass list by title
+      responses:
+        "200":
+          description: A list of movies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Medias"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+    post:
+      tags:
+        - medias
+      summary: Create a new movie
+      description: Adds a new movie
+      requestBody:
+        description: The body
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Medias"
+      responses:
+        "201":
+          description: The ID of the newly created Media
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+  /medias/{mediaId}:
+    get:
+      tags:
+        - medias
+      summary: Get by Id
+      description: Retrieve single Media
+      parameters:
+        - in: path
+          name: mediaId
+          required: true
+          schema:
+            type: string
+          description: The ID of the Media to retrieve
+      responses:
+        "200":
+          description: The single Movie
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Medias"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+    put:
+      tags:
+        - medias
+      description: Update an existing Media
+      summary: Update
+      parameters:
+        - in: path
+          name: mediaId
+          required: true
+          schema:
+            type: string
+          description: The ID of the Media to update
+      requestBody:
+        description: Fields to update
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Medias"
+      responses:
+        "200":
+          description: A list of medias
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Medias"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+    delete:
+      tags:
+        - medias
+      summary: Delete
+      description: Delete a specific Media by ID
+      parameters:
+        - in: path
+          name: mediaId
+          required: true
+          schema:
+            type: string
+          description: The ID of the Media to delete
+      responses:
+        "204":
+          description: Empty Response
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+  /medias/upload:
+    post:
+      tags:
+        - medias
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Ok
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /medias/{mediaId}/pdf:
+    get:
+      tags:
+        - users
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+    post:
+      summary: Create
+      description: Add a new user
+      requestBody:
+        description: The object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Medias"
+      responses:
+        "201":
+          description: The ID of the newly created media
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+      tags:
+        - mediass
+  /medias/{mediaId}:
+    summary: Specific user related endpoints
+    get:
+      summary: Get by Id
+      description: Retrieve single User's data
+      parameters:
+        - in: path
+          name: mediaId
+          required: true
+          schema:
+            type: string
+          description: The ID of the User to delete
+      operationId: ""
+      responses:
+        "200":
+          description: The Media
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Medias"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+      tags:
+        - mediass
+    put:
+      summary: Update
+      description: Update an existing Media
+      parameters:
+        - in: path
+          name: mediaId
+          required: true
+          schema:
+            type: string
+          description: The ID of the Media to delete
+      requestBody:
+        description: The object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Medias"
+      responses:
+        "200":
+          description: The modified Media
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Medias"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+      tags:
+        - mediass
+    delete:
+      summary: Delete
+      description: Delete a specific Media by Id
+      parameters:
+        - in: path
+          name: mediaId
+          required: true
+          schema:
+            type: string
+          description: The ID of the Media to delete
+      operationId: ""
+      responses:
+        "204":
+          description: No Content
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/GenericServerError"
+      tags:
+        - users
+components:
+  responses:
+    NotFound:
+      description: The specific resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    BadRequest:
+      description: Some problems with your request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: Bearer token missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    GenericServerError:
+      description: A problem on the server occurred
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  schemas:
+    Medias:
+      type: object
+      properties:
+        imdbID:
+          type: string
+        title:
+          type: string
+        year:
+          type: string
+        
+        poster:
+          type: string
+    
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        message:
+          type: string
