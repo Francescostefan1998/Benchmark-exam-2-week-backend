@@ -27,6 +27,20 @@ const loggerMiddleware = (req, res, next) => {
   req.user = "Dan";
   next();
 };
+const whitelist = [process.env.FE_DEV_URL, process.env.FE_PROD_URL];
+
+server.use(
+  cors({
+    origin: (origin, corsNext) => {
+      console.log("Origin:", origin);
+      if (!origin || whitelist.indexOf(origin) !== -1) {
+        corsNext(null, true);
+      } else {
+        corsNext(createHttpError(400, `Cors error ${origin}`));
+      }
+    },
+  })
+);
 server.use(express.static(publicFolderPath));
 server.use(loggerMiddleware);
 server.use(express.json());
